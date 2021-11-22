@@ -71,7 +71,7 @@ d3.csv("data4.csv", function(d) {
         .attr("stroke-dasharray", `0,${l}`)
         .attr("d", line)
         .transition()
-        .duration(5000)
+        .duration(10000)
         .ease(d3.easeLinear)
         .attr("stroke-dasharray", `${l},${l}`);
 
@@ -129,6 +129,6 @@ d3.csv("data4.csv", function(d) {
     
       label
         .transition(5000)
-        .delay((d, i) => (length(line(data.slice(0, i + 1))) / l) * (5000 - 50))
+        .delay((d, i) => (length(line(data.slice(0, i + 1))) / l) * (10000 - 50))
         .attr("opacity", 1);
 })
