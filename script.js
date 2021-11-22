@@ -1,14 +1,13 @@
 var margin = 50;
-var width = 800 - margin*2;
-var height = 800 - margin*2;
+var width = 700 - margin*2;
+var height = 700 - margin*2;
 
 var data = []
 
 var svg = d3.select("#svg1")
     .attr("width", width+margin*3)
     .attr("height", height+margin*2)
-
-svg.append("g")
+    .append("g")
     .attr("transform",`translate(${margin*1.5},${margin})`)
 
 d3.csv("data4.csv", function(d) {
