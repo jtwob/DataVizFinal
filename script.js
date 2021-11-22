@@ -7,7 +7,8 @@ var data = []
 var svg = d3.select("#svg1")
     .attr("width", width+margin*3)
     .attr("height", height+margin*2)
-    .append("g")
+
+svg.append("g")
     .attr("transform",`translate(${margin*1.5},${margin})`)
 
 d3.csv("data4.csv", function(d) {
