@@ -19,7 +19,7 @@ d3.csv("data4.csv", function(d) {
         comp50: +d.comp50,
         orient: d.orient
     })
-    console.log(data);
+    // console.log(data);
 }).then(() => {
     var xScale = d3.scaleLinear()
                     .domain([d3.min(data, function(d) {return d.comp50;})-1000000000, d3.max(data, function(d) {return d.comp50;})])
@@ -33,7 +33,7 @@ d3.csv("data4.csv", function(d) {
     
     line = d3
         .line()
-        .curve(d3.curveCatmullRom)
+        // .curve(d3.curveCatmullRom)
         .x(d => xScale(xAccessor(d)))
         .y(d => yScale(yAccessor(d)));
     
@@ -71,7 +71,7 @@ d3.csv("data4.csv", function(d) {
         .attr("stroke-dasharray", `0,${l}`)
         .attr("d", line)
         .transition()
-        .duration(10000)
+        .duration(7500)
         .ease(d3.easeLinear)
         .attr("stroke-dasharray", `${l},${l}`);
 
@@ -128,7 +128,7 @@ d3.csv("data4.csv", function(d) {
         });
     
       label
-        .transition(5000)
-        .delay((d, i) => (length(line(data.slice(0, i + 1))) / l) * (10000 - 50))
+        .transition(7500)
+        .delay((d, i) => (length(line(data.slice(0, i + 1))) / l) * (7500 - 50))
         .attr("opacity", 1);
 })
