@@ -10,7 +10,7 @@ var svg = d3.select("#svg1")
     .append("g")
     .attr("transform",`translate(${margin*1.5},${margin})`)
 
-d3.csv("data4.csv", function(d) {
+d3.csv("data1.csv", function(d) {
     data.push({
         year: +d.year,
         pop1: +d.pop1,

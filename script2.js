@@ -10,7 +10,7 @@ var svg2 = d3.select("#svg2")
     .append("g")
     .attr("transform",`translate(${margin*1.5},${margin})`)
 
-d3.csv("data.csv",function(d){
+d3.csv("data2.csv",function(d){
     data2.push({
         year: d3.timeParse("%Y")(+d.year),
         average: +d.averageamount,
@@ -22,7 +22,7 @@ d3.csv("data.csv",function(d){
         ratio: +d.ratiomedtoavg
     })
 }).then(() => {
-    console.log(data2)
+    // console.log(data2)
     var x = d3.scaleTime()
         .domain([d3.timeParse("%Y")(1990), d3.timeParse("%Y")(2021)])
         .range([0,width2]);
