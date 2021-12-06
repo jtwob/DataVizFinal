@@ -53,6 +53,7 @@ d3.csv("data1.csv", function(d) {
     svg.append("text")
         .attr("x", width/2 - 150)
         .attr("y", height+40)
+        .style("fill", "white")
         .text("Bottom 50% Aggregate Compensation (Billions of $)");
     
     svg.append("g")
@@ -61,12 +62,13 @@ d3.csv("data1.csv", function(d) {
         .attr("transform","rotate(-90)")
         .attr("x", -height/2-100)
         .attr("y", -60)
+        style("fill", "white")
         .text("Top 1% Aggregate Compensation (Billions of $)");
 
     svg.append("path")
         .datum(data)
         .attr("fill", "none")
-        .attr("stroke", "black")
+        .attr("stroke", "white")
         .attr("stroke-width", 1.5)
         .attr("stroke-dasharray", `0,${l}`)
         .attr("d", line)
@@ -90,12 +92,14 @@ d3.csv("data1.csv", function(d) {
         .attr("style","font-size: 20")
         .attr("x", width/2-70)
         .attr("y", 0)
+        style("fill", "white")
         .text("US Income Data 1991-2020");
 
     const label = svg
         .append("g")
         .attr("font-family", "sans-serif")
         .attr("font-size", 10)
+        style("fill", "white")
         .selectAll("g")
         .data(data)
         .join("g")
