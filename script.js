@@ -135,4 +135,32 @@ d3.csv("data1.csv", function(d) {
         .transition(7500)
         .delay((d, i) => (length(line(data.slice(0, i + 1))) / l) * (7500 - 50))
         .attr("opacity", 1);
+
+      const annotations = [{
+        note: {
+          title: "2008 Housing Crisis", 
+          label: "Here is the time period following the 2008 housing crisis, that crashed the global economy.",
+          wrap: 190
+        },
+        type: d3.annotationCalloutCircle,
+        x: 322,
+        y: 260,
+        dy: 100,
+        dx: 60,
+        subject: {
+          radius: 70
+        },
+        connector: {
+          end: "arrow"
+        },
+      }].map(function(d){ d.color = "teal"; return d})
+
+      const makeAnnotations = d3.annotation()
+          .type(d3.annotationLabel)
+          .annotations(annotations)
+
+      svg
+        .append("g")
+        .attr("class", "annotation-group")
+        .call(makeAnnotations)
 })
