@@ -130,7 +130,7 @@
                     .attr("x",function(d,i){return xS(Object.keys(countryMap)[i])-10})
                     .attr("width", "20")
                     .attr("y", function(d) {  return d>0?yS(d):height4-37.5; })
-                    .attr("height", function(d) {console.log(yS(d));return d>0?height4-37.5-yS(d):yS(d)-(height4-37.5); });
+                    .attr("height", function(d) {return d>0?height4-37.5-yS(d):yS(d)-(height4-37.5); });
 
                 bars
                     .transition().duration(250)
