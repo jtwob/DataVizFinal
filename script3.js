@@ -90,7 +90,14 @@ d3.csv("data3.csv", function(d, i) {
                 .style("text-anchor", "middle")
                 .attr("y", -9)
                 .text(function(d) { return d; })
-                .style("fill", "black")
+                .style("fill", "white")
+        
+        svg3.append("text")
+            .attr("x",width3/2-220)
+            .attr("y",-30)
+            .attr("style","font-size: 20")
+            .style("fill", "white")
+            .text("Top 10 Companies by Market Cap VS Global Challenges")
     }
 
     // function path(d){

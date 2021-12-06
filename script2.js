@@ -83,12 +83,14 @@ d3.csv("data2.csv",function(d){
             .attr("style","font-size: 20")
             .attr("x", width2/2-100)
             .attr("y", 0)
+            .style("fill", "white")
             .text("Average and Median Wages");
 
         svg2.append("text")
             .attr("style","font-size: 18")
             .attr("x", width2/2-20)
             .attr("y", height2+40)
+            .style("fill", "white")
             .text("Year");
 
         svg2.append("text")
@@ -96,12 +98,14 @@ d3.csv("data2.csv",function(d){
             .attr("transform","rotate(-90)")
             .attr("x", -height2/2-40)
             .attr("y", -60)
+            .style("fill", "white")
             .text("Earnings ($)");
         svg2.append("text")
             .attr("style","font-size: 18")
             .attr("transform","rotate(-90)")
             .attr("x", -height2/2-100)
             .attr("y", width2+margin)
+            .style("fill", "white")
             .text("Ratio of Median to Average");
         
         svg2.append("circle").attr("cx",37.5).attr("cy",height2+85).attr("r",3).style("fill", "teal");
@@ -125,16 +129,19 @@ d3.csv("data2.csv",function(d){
             .attr("x", 60)
             .attr("y",height2+40)
             .attr("style","font-size: 14")
+            .style("fill", "white")
             .text("Average Income")
         svg2.append("text")
             .attr("x", 60)
             .attr("y",height2+65)
             .attr("style","font-size: 14")
             .text("Median Income")
+            .style("fill", "white")
         svg2.append("text")
             .attr("x", 60)
             .attr("y",height2+90)
             .attr("style","font-size: 14")
+            .style("fill", "white")
             .text("Ratio of Median to Average")
 
 })

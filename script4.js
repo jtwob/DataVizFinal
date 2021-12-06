@@ -122,6 +122,7 @@
             .attr("style","font-size: 20")
             .attr("x", width2/2-180)
             .attr("y", 0)
+            .style("fill", "white")
             .text("International Wage Stats Relative to US Stats");
 
         var updateBars = function(d){
