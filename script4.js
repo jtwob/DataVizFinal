@@ -81,7 +81,6 @@
                     
                 })
             })
-            // console.log(countryMap);
             makeChart(countryMap);
         }
     });
@@ -109,13 +108,6 @@
         svg4.append("g")
             .attr("transform", `translate(0, ${height4-37.5})`)
             .call(d3.axisBottom(xS))
-            
-        var yAxis = d3.axisLeft()
-            .ticks(10).tickFormat((d) => {return d+"%"})
-            .scale(yS);
-
-        var yAxisHandleForUpdate = svg4.append("g")
-            .attr("class", "y axis");
 
         svg4.append("text")
             .attr("class", "title")
@@ -126,8 +118,6 @@
             .text("International Wage Stats Relative to US Stats");
 
         var updateBars = function(d){
-            // yS.domain( d3.extent(d) );
-            // yAxisHandleForUpdate.call(yAxis);
             var bars = svg4.selectAll(".bar")
                 .data(d);
 
@@ -139,15 +129,12 @@
                     .attr("opacity",0.5)
                     .attr("x",function(d,i){return xS(Object.keys(countryMap)[i])-10})
                     .attr("width", "20")
-                    // .attr("y", function(d) { return height4-37.5 })
                     .attr("y", function(d) {  return d>0?yS(d):height4-37.5; })
-                    // .attr("height", function(d) { return 10 });
                     .attr("height", function(d) {console.log(yS(d));return d>0?height4-37.5-yS(d):yS(d)-(height4-37.5); });
 
                 bars
                     .transition().duration(250)
                     .attr("y", function(d) { return d>0?yS(d):height4-37.5; })
-                    // .attr("height", function(d) { return 10 });
                     .attr("height", function(d) {return d>0?height4-37.5-yS(d):yS(d)-(height4-37.5); });
                     
                 bars.exit().remove();
@@ -156,19 +143,16 @@
         var dropdownChange = function() {
             var newStat = d3.select(this).property('value'),
                 newData = crossSection(newStat);
-                // console.log(newStat);
             updateBars(newData);
         };
 
         var crossSection = function(value){
             var temp = [];
             Object.keys(countryMap).filter((d) => {return d!=="USA"}).forEach(function(d){
-                // console.log(countryMap[d][value]*100);
                 temp.push(countryMap[d][value]*100)
             })
             return temp;
         }
-        crossSection(1);
         var dropdown = d3.select("#drop")
             .insert("select","svg")
             .on("change",dropdownChange);
