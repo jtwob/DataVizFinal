@@ -117,6 +117,13 @@
         var yAxisHandleForUpdate = svg4.append("g")
             .attr("class", "y axis");
 
+        svg4.append("text")
+            .attr("class", "title")
+            .attr("style","font-size: 20")
+            .attr("x", width2/2-180)
+            .attr("y", 0)
+            .text("International Wage Stats Relative to US Stats");
+
         var updateBars = function(d){
             // yS.domain( d3.extent(d) );
             // yAxisHandleForUpdate.call(yAxis);
@@ -128,6 +135,7 @@
                 .append("rect")
                     .attr("class","bar")
                     .attr("fill","teal")
+                    .attr("opacity",0.5)
                     .attr("x",function(d,i){return xS(Object.keys(countryMap)[i])-10})
                     .attr("width", "20")
                     // .attr("y", function(d) { return height4-37.5 })
@@ -172,7 +180,6 @@
             .text(function(d){
                 return d;
             })
-        var initialData = crossSection(2);
+        var initialData = crossSection(0);
         updateBars(initialData);
-
     }

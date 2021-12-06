@@ -33,7 +33,7 @@ d3.csv("data1.csv", function(d) {
     
     line = d3
         .line()
-        // .curve(d3.curveCatmullRom)
+        .curve(d3.curveCatmullRom)
         .x(d => xScale(xAccessor(d)))
         .y(d => yScale(yAccessor(d)));
     
