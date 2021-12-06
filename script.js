@@ -62,7 +62,7 @@ d3.csv("data1.csv", function(d) {
         .attr("transform","rotate(-90)")
         .attr("x", -height/2-100)
         .attr("y", -60)
-        style("fill", "white")
+        .style("fill", "white")
         .text("Top 1% Aggregate Compensation (Billions of $)");
 
     svg.append("path")
@@ -92,14 +92,14 @@ d3.csv("data1.csv", function(d) {
         .attr("style","font-size: 20")
         .attr("x", width/2-70)
         .attr("y", 0)
-        style("fill", "white")
+        .style("fill", "white")
         .text("US Income Data 1991-2020");
 
     const label = svg
         .append("g")
         .attr("font-family", "sans-serif")
         .attr("font-size", 10)
-        style("fill", "white")
+        .style("fill", "white")
         .selectAll("g")
         .data(data)
         .join("g")
