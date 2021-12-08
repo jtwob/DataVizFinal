@@ -84,7 +84,7 @@ d3.csv("data3.csv", function(d, i) {
             // I translate this element to its right position on the x axis
             .attr("transform", function(d) { return "translate(" + x3(d) + ")"; })
             // And I build the axis with the call function
-            .each(function(d) { d3.select(this).call(d3.axisRight().scale(axes[d]).ticks(20)); })
+            .each(function(d) { d3.select(this).call(d3.axisRight().scale(axes[d]).ticks(10)); })
             // Add axis title
             .append("text")
                 .style("text-anchor", "middle")
