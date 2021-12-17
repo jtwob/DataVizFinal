@@ -1,12 +1,4 @@
 /**
- * TODO: Find 
- * top marginal tax rate, 
- * minimum wage, 
- * average wage, 
- * median wage,
- * and union membership rates 
- * 
- * for at least 10 Developed countries and the US,
  * 
  * norway:
  * https://www.skatteetaten.no/en/rates/maximum-effective-marginal-tax-rates/
@@ -46,125 +38,126 @@
  * 
  */
 
-/**
- * TODO: implement 
- * a twin bar chart 
- * that represents each variable as a bar 
- * compared to the US
- * make it interactive
- * by implementing a dropdown 
- * of the countries for which there is data
- */
+var margin = 50;
+var width4 = 600 - margin*2;
+var height4 = 400 - margin*2;
 
-    var margin = 50;
-    var width4 = 600 - margin*2;
-    var height4 = 400 - margin*2;
+var chartFields = ["Top Marginal Tax Rate","Minimum Wage","Average Income","Median Income","Union Membership"];
 
-    var chartFields = ["Top Marginal Tax Rate","Minimum Wage","Average Income","Median Income","Union Membership"];
+var countryMap = {};
+var data4 = [];
 
-    var countryMap = {};
-    var data4 = [];
-
-    d3.csv("./data4.csv", function(d) {
-            var country = d.country;
-            countryMap[country] = [];
-            chartFields.forEach(function(field) {
-                if(field!=='country'){
-                    countryMap[country].push(+d[field]);
-                }
-            });
-        
-        if(countryMap.USA){
-            countryMap.USA.forEach(function(f, i) {
-                Object.keys(countryMap).filter((d) => {return d!=="usa"}).forEach(function(d, j){
-                    countryMap[d][i] = (countryMap[d][i]/f)-1
-                    
-                })
+// pull and save data
+d3.csv("./data4.csv", function(d) {
+        var country = d.country;
+        countryMap[country] = [];
+        chartFields.forEach(function(field) {
+            if(field!=='country'){
+                countryMap[country].push(+d[field]);
+            }
+        });
+    
+    if(countryMap.USA){
+        countryMap.USA.forEach(function(f, i) {
+            Object.keys(countryMap).filter((d) => {return d!=="usa"}).forEach(function(d, j){
+                countryMap[d][i] = (countryMap[d][i]/f)-1
+                
             })
-            makeChart(countryMap);
-        }
-    });
-
-    var makeChart = function(countryMap) {
-
-        var xS = d3.scalePoint()
-            .range([0, width4])
-            .padding(1)
-            .domain(Object.keys(countryMap).filter((d) => {return d!=="USA"}))
-
-        var yS = d3.scaleLinear()
-            .domain([-100,700])
-            .range([height4,0]);
-
-        var svg4 = d3.select("#svg3")
-            .attr("width", width4+margin*3)
-            .attr("height", height4+margin*2)
-            .append("g")
-            .attr("transform",`translate(${margin*1.5},${margin})`);
-
-        svg4.append("g")
-            .call(d3.axisLeft(yS).ticks(10).tickFormat((d) => {return d+"%"}))
-        
-        svg4.append("g")
-            .attr("transform", `translate(0, ${height4-37.5})`)
-            .call(d3.axisBottom(xS))
-
-        svg4.append("text")
-            .attr("class", "title")
-            .attr("style","font-size: 20")
-            .attr("x", width2/2-180)
-            .attr("y", 0)
-            .style("fill", "white")
-            .text("International Wage Stats Relative to US Stats");
-
-        var updateBars = function(d){
-            var bars = svg4.selectAll(".bar")
-                .data(d);
-
-                bars
-                .enter()
-                .append("rect")
-                    .attr("class","bar")
-                    .attr("fill","teal")
-                    .attr("opacity",0.5)
-                    .attr("x",function(d,i){return xS(Object.keys(countryMap)[i])-10})
-                    .attr("width", "20")
-                    .attr("y", function(d) {  return d>0?yS(d):height4-37.5; })
-                    .attr("height", function(d) {return d>0?height4-37.5-yS(d):yS(d)-(height4-37.5); });
-
-                bars
-                    .transition().duration(250)
-                    .attr("y", function(d) { return d>0?yS(d):height4-37.5; })
-                    .attr("height", function(d) {return d>0?height4-37.5-yS(d):yS(d)-(height4-37.5); });
-                    
-                bars.exit().remove();
-        };
-
-        var dropdownChange = function() {
-            var newStat = d3.select(this).property('value'),
-                newData = crossSection(newStat);
-            updateBars(newData);
-        };
-
-        var crossSection = function(value){
-            var temp = [];
-            Object.keys(countryMap).filter((d) => {return d!=="USA"}).forEach(function(d){
-                temp.push(countryMap[d][value]*100)
-            })
-            return temp;
-        }
-        var dropdown = d3.select("#drop")
-            .insert("select","svg")
-            .on("change",dropdownChange);
-        
-        dropdown.selectAll("option")
-            .data(chartFields)
-            .enter()
-            .append("option")
-            .attr("value", function(d,i){return i;})
-            .text(function(d){
-                return d;
-            })
-        var initialData = crossSection(0);
-        updateBars(initialData);
+        })
+        makeChart(countryMap);
     }
+});
+
+// function to rerender chart if dropdown is used
+var makeChart = function(countryMap) {
+    // scale definitions
+    var xS = d3.scalePoint()
+        .range([0, width4])
+        .padding(1)
+        .domain(Object.keys(countryMap).filter((d) => {return d!=="USA"}))
+
+    var yS = d3.scaleLinear()
+        .domain([-100,700])
+        .range([height4,0]);
+
+    // Access svg slot 3 (svg3 because the visuals were reordered)
+    var svg4 = d3.select("#svg3")
+        .attr("width", width4+margin*3)
+        .attr("height", height4+margin*2)
+        .append("g")
+        .attr("transform",`translate(${margin*1.5},${margin})`);
+
+    // y axis
+    svg4.append("g")
+        .call(d3.axisLeft(yS).ticks(10).tickFormat((d) => {return d+"%"}))
+    
+    // x axis
+    svg4.append("g")
+        .attr("transform", `translate(0, ${height4-37.5})`)
+        .call(d3.axisBottom(xS))
+
+    // title
+    svg4.append("text")
+        .attr("class", "title")
+        .attr("style","font-size: 20")
+        .attr("x", width2/2-180)
+        .attr("y", 0)
+        .style("fill", "white")
+        .text("International Wage Stats Relative to US Stats");
+
+    // function to get the bars to render properly
+    var updateBars = function(d){
+        var bars = svg4.selectAll(".bar")
+            .data(d);
+
+            bars
+            .enter()
+            .append("rect")
+                .attr("class","bar")
+                .attr("fill","teal")
+                .attr("opacity",0.5)
+                .attr("x",function(d,i){return xS(Object.keys(countryMap)[i])-10})
+                .attr("width", "20")
+                .attr("y", function(d) {  return d>0?yS(d):height4-37.5; })
+                .attr("height", function(d) {return d>0?height4-37.5-yS(d):yS(d)-(height4-37.5); });
+
+            bars
+                .transition().duration(250)
+                .attr("y", function(d) { return d>0?yS(d):height4-37.5; })
+                .attr("height", function(d) {return d>0?height4-37.5-yS(d):yS(d)-(height4-37.5); });
+                
+            bars.exit().remove();
+    };
+
+    // dropdown handler
+    var dropdownChange = function() {
+        var newStat = d3.select(this).property('value'),
+            newData = crossSection(newStat);
+        updateBars(newData);
+    };
+
+    // finds queried stat for all countries minus USA, returns array
+    var crossSection = function(value){
+        var temp = [];
+        Object.keys(countryMap).filter((d) => {return d!=="USA"}).forEach(function(d){
+            temp.push(countryMap[d][value]*100)
+        })
+        return temp;
+    }
+    var dropdown = d3.select("#drop")
+        .insert("select","svg")
+        .on("change",dropdownChange);
+    
+    // adding dropdown menu
+    dropdown.selectAll("option")
+        .data(chartFields)
+        .enter()
+        .append("option")
+        .attr("value", function(d,i){return i;})
+        .text(function(d){
+            return d;
+        })
+    // setting initial data
+    var initialData = crossSection(0);
+    updateBars(initialData);
+}

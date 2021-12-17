@@ -4,12 +4,14 @@ var height = 700 - margin*2;
 
 var data = []
 
+//Access svg slot 1
 var svg = d3.select("#svg1")
     .attr("width", width+margin*3)
     .attr("height", height+margin*2)
     .append("g")
     .attr("transform",`translate(${margin*1.5},${margin})`)
 
+// pull and save data
 d3.csv("data1.csv", function(d) {
     data.push({
         year: +d.year,
@@ -19,8 +21,8 @@ d3.csv("data1.csv", function(d) {
         comp50: +d.comp50,
         orient: d.orient
     })
-    // console.log(data);
 }).then(() => {
+  // scale definitions
     var xScale = d3.scaleLinear()
                     .domain([d3.min(data, function(d) {return d.comp50;})-1000000000, d3.max(data, function(d) {return d.comp50;})])
                     .range([0,width]);
@@ -31,6 +33,7 @@ d3.csv("data1.csv", function(d) {
     xAccessor = d => d.comp50;
     yAccessor = d => d.comp1;
     
+    // nested d3 functions for animating the line connecting the scatter plot
     line = d3
         .line()
         .curve(d3.curveCatmullRom)
@@ -47,6 +50,7 @@ d3.csv("data1.csv", function(d) {
     
     const l = length(line(data));
 
+    // x axis
     svg.append("g")
         .attr("transform", `translate(0, ${height})`)
         .call(d3.axisBottom(xScale).ticks(10).tickFormat(x => `${x/1000000000}`));
@@ -56,6 +60,7 @@ d3.csv("data1.csv", function(d) {
         .style("fill", "white")
         .text("Bottom 50% Aggregate Compensation (Billions of $)");
     
+    // y axis
     svg.append("g")
         .call(d3.axisLeft(yScale).ticks(9).tickFormat(x => `${x/1000000000}`));
     svg.append("text")
@@ -65,6 +70,7 @@ d3.csv("data1.csv", function(d) {
         .style("fill", "white")
         .text("Top 1% Aggregate Compensation (Billions of $)");
 
+    // appending the connector animated line
     svg.append("path")
         .datum(data)
         .attr("fill", "none")
@@ -77,6 +83,7 @@ d3.csv("data1.csv", function(d) {
         .ease(d3.easeLinear)
         .attr("stroke-dasharray", `${l},${l}`);
 
+    // adding the points
     svg.append("g")
         .selectAll("bubble")
         .data(data)
@@ -87,6 +94,7 @@ d3.csv("data1.csv", function(d) {
             .attr("r", 3 )
             .style("fill", "teal");
 
+    // title
     svg.append("text")
         .attr("class", "title")
         .attr("style","font-size: 20")
@@ -95,6 +103,7 @@ d3.csv("data1.csv", function(d) {
         .style("fill", "white")
         .text("US Income Data 1991-2020");
 
+    // added an orientation feature to ensure all point year labels were not covered.
     const label = svg
         .append("g")
         .attr("font-family", "sans-serif")
@@ -136,6 +145,7 @@ d3.csv("data1.csv", function(d) {
         .delay((d, i) => (length(line(data.slice(0, i + 1))) / l) * (7500 - 50))
         .attr("opacity", 1);
 
+      // adding annotation
       const annotations = [{
         note: {
           title: "2008 Housing Crisis", 
