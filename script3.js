@@ -61,7 +61,13 @@ d3.csv("data3.csv", function(d, i) {
             .enter()
             .append("g")
             .attr("transform", function(d) { return "translate(" + x3(d) + ")"; })
+<<<<<<< HEAD
             .each(function(d) { d3.select(this).call(d3.axisRight().scale(axes[d]).ticks(20)); })
+=======
+            // And I build the axis with the call function
+            .each(function(d) { d3.select(this).call(d3.axisRight().scale(axes[d]).ticks(10)); })
+            // Add axis title
+>>>>>>> c463f1f127d4371939ba729469355ac174c030b6
             .append("text")
                 .style("text-anchor", "middle")
                 .attr("y", -9)
@@ -114,4 +120,15 @@ d3.csv("data3.csv", function(d, i) {
             .style("fill","white")
             .text("Hunger")
     }
+<<<<<<< HEAD
 })
+=======
+
+    // function path(d){
+    //     return d3.line()(data3.map(function(p) {return [x(p.cost), axes[p](d[p])];}))
+    // }
+    
+    // console.log(x3(Object.keys(axes)[1]));
+
+})
+>>>>>>> c463f1f127d4371939ba729469355ac174c030b6
